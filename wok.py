@@ -111,5 +111,4 @@ if __name__ == '__main__':
 
     if matrix.wall:
         wall_links = Wall(matrix.wall, matrix.query)
-        print wall_links.url
         wall_links.handleData()
