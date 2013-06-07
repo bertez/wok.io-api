@@ -5,10 +5,20 @@ import json
 import urllib2
 import argparse
 
+import sys
+
 api_key = '9a0554259914a86fb9e7eb014e4e5d52'
 api_enabled = False
 base_url = 'http://wok.io/'
 
+def safeprint(s):
+    try:
+        print(s)
+    except UnicodeEncodeError:
+        if sys.version_info >= (3,):
+            print(s.encode('utf8').decode(sys.stdout.encoding))
+        else:
+            print(s.encode('utf8'))
 
 class Wok(object):
     """Handles wok.io API"""
@@ -45,10 +55,10 @@ class List(Wok):
         print
 
         for wall in json_data:
-            print wall['name']
+            safeprint(wall['name'])
             if wall['description']:
-                print wall['description']
-            print base_url + wall['slug']
+                safeprint(wall['description'])
+            print wall['slug']
             print
 
 
@@ -76,9 +86,9 @@ class Wall(Wok):
 
         for id, link in json_data['items'].iteritems():
             item = link['link']
-            print item['title']
+            safeprint(item['title'])
             if item['description']:
-                print item['description']
+                safeprint(item['description'])
             print item['url']
             print
 
